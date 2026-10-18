@@ -40,7 +40,9 @@ jobs:
       - name: Checkout klawu source
         uses: actions/checkout@v6
         with:
-          ref: ${{ github.event_name == 'workflow_dispatch' && inputs.source_ref || github.ref_name }}
+          ref:
+            ${{ github.event_name == 'workflow_dispatch' && inputs.source_ref ||
+            github.ref_name }}
 
       - name: Compute build metadata
         id: meta
@@ -70,7 +72,9 @@ jobs:
           labels: |
             org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
             org.opencontainers.image.revision=${{ github.sha }}
-          outputs: type=image,name=${{ steps.meta.outputs.image }},push-by-digest=true,name-canonical=true
+          outputs:
+            type=image,name=${{ steps.meta.outputs.image
+            }},push-by-digest=true,name-canonical=true
 
       - name: Export digest
         run: |
